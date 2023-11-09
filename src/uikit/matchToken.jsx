@@ -9,6 +9,7 @@ import matchPhoto from "../../public/mockMatchPhoto.png";
 import { useEffect, useRef, useState } from "react";
 
 const quicksand = Quicksand({ weight: "300", subsets: ["latin"] });
+const quicksand = Quicksand({ weight: "500", subsets: ["latin"] });
 
 const MatchedMovie = ({ side, posterUrl, role, name }) => {
     return (
