@@ -8,20 +8,20 @@ import { useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 
 const quicksandLight = Quicksand({ weight: "300", subsets: ["latin"] });
+const quicksandMedium = Quicksand({ weight: "400", subsets: ["latin"] });
 
 const SearchToken = ({ title, director, state, id, onSelect }) => {
-    const [anim, setAnim] = useState(false)
+    const [anim, setAnim] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
-        if (state === 1)
-            setAnim(true)
-        else if (state === 0 || state === 2)
-            setAnim(false)
-    }, [state])
+        if (state === 1) setAnim(true);
+        else if (state === 0 || state === 2) setAnim(false);
+    }, [state]);
 
     useEffect(() => {
-        state === 2 && setAnim(true)
-    }, [anim])
+        state === 2 && setAnim(true);
+    }, [anim]);
 
     return (
         <CSSTransition
@@ -29,15 +29,27 @@ const SearchToken = ({ title, director, state, id, onSelect }) => {
             timeout={{ enter: 500, exit: 0 }}
             classNames={{
                 enterActive: styles.opaActive,
-                enterDone: state === 2 ? styles.opaBlinkingActive : styles.opaDone,
+                enterDone:
+                    state === 2 ? styles.opaBlinkingActive : styles.opaDone,
                 exitActive: styles.opaDone,
                 exitDone: styles.opaExitActive,
             }}
         >
-            <div className={styles.tokenContainer} onClick={() => state === 1 && onSelect(id)}>
-                <div className={styles.textContainer}>
+            <div
+                className={styles.tokenContainer}
+                onClick={() => state === 1 && onSelect(id)}
+            >
+                <div
+                    className={styles.textContainer}
+                    onMouseEnter={() => {
+                        setIsHovered(true);
+                    }}
+                    onMouseLeave={() => {
+                        setIsHovered(false)
+                    }}
+                >
                     <span
-                        className={styles.title}
+                        className={isHovered ? `${styles.title} ${quicksandMedium.className}` : `${styles.title} ${quicksandLight.className}`}
                         title={
                             title.toUpperCase() +
                             "  " +
@@ -122,7 +134,12 @@ export default function MovieCard() {
         >
             {state === 0 && <Image src={clapper} alt="movie clapper" />}
             {state === 1 && (
-                <div className={styles.searchPanel} style={selectedToken !== -1 ? {overflow: "hidden"} : {}}>{searchTokens}</div>
+                <div
+                    className={styles.searchPanel}
+                    style={selectedToken !== -1 ? { overflow: "hidden" } : {}}
+                >
+                    {searchTokens}
+                </div>
             )}
         </div>
     );
