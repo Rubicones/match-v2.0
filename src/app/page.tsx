@@ -3,6 +3,7 @@ import styles from "./page.module.sass";
 import Search from "@/uikit/search";
 import MovieCard from "@/uikit/movieCard";
 import Switch from "@/uikit/switch";
+import MatchToken from "@/uikit/matchToken";
 
 export default function Home() {
     return (
@@ -10,6 +11,7 @@ export default function Home() {
             <Search />
             <MovieCard />
             <Switch />
+            <MatchToken />
         </div>
     );
 }
